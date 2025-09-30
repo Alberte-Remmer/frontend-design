@@ -5,7 +5,7 @@
     margin-top: 0.25lh;
   }
 
-  &:not(:has(h3)):has(img) {
+  & :not(:has(h3)):not(:has(img)) p {
     font-size: 1.25rem;
     line-height: 1.4;
   }
