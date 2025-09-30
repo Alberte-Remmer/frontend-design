@@ -1,16 +1,51 @@
 :root {
-    background: #E3EDFB;
+  background: white;
 
-    --color-icon: #0B3A67;
+  --color-icon: #0b3a67;
 
-    --image-width: 8rem;
-    --card-padding: 1rem;
+  --image-width: 8rem;
+  --card-padding: 1rem;
 
-    --font-heading: 1.75rem;
+  --font-heading: 1.75rem;
 
-    /* Når du synes, du er færdig, så ændr værdien herunder til '1' for at se dit resultat i browseren */
-    --hide-overlay: 0;
+  /* Når du synes, du er færdig, så ændr værdien herunder til '1' for at se dit resultat i browseren */
+  --hide-overlay: 1;
 }
 
-
 /* Begynd her... */
+
+.card {
+  padding: var(--card-padding);
+  margin: 1rem;
+  background: #e3edfb;
+
+  display: inline-flex; /* Flexbox der kun tager den plads den behøver */
+  gap: 1rem;
+  flex-wrap: wrap; /* Elementer kan wrappe til næste linje */
+  align-items: center; /* Centrerer elementer vertikalt */
+
+  h1 {
+    font-weight: 700;
+    font-size: var(--font-heading);
+  }
+
+  p {
+    font-weight: 500;
+    color: lightseagreen;
+  }
+
+  img {
+    max-width: var(--image-width);
+    border-radius: calc(infinity * 1px); /* Perfekt cirkel (smart trick!) */
+  }
+}
+
+ul {
+  display: flex; /* Horizontal liste */
+  gap: 2rem;
+
+  svg {
+    color: var(--color-icon);
+    aspect-ratio: 1; /* Holder ikoner kvadratiske */
+  }
+}
