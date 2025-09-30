@@ -1,16 +1,29 @@
 .card {
   padding: 1rem;
 
-  & .content > * + * {
+  .content > * + * {
     margin-top: 0.25lh;
   }
-
-  & :not(:has(h3)):not(:has(img)) p {
-    font-size: 1.25rem;
-    line-height: 1.4;
-  }
+}
+/* Kort uden både et billede og en overskrift skal have en justeret font-størrelse og linjehøjde for paragraf tekst. */
+.card:not(:has(h3)):not(:has(img)) p {
+  font-size: 1.25rem;
+  line-height: 1.4;
 }
 
+/* Kort uden billeder skal have en forøget font-størrelse for overskrifter. */
+.card:not(:has(img, h3)) {
+  font-size: 1.6rem;
+}
+
+/* Kort med billeder skal have nul padding, men deres indhold skal matche padding’en fra de øvrige kort. */
+.card:has(img) {
+  padding: 0;
+}
+
+.card:has(img) .content {
+  padding: 1rem;
+}
 @layer reset, cards;
 
 @layer cards {
