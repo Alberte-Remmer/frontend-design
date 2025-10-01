@@ -1,4 +1,18 @@
 article {
-    max-width: 65ch;
-    margin-inline: auto;
+  margin-inline: auto;
+
+  display: grid;
+  grid-template-columns: [full-start] 1fr [breakout-start] 0.3fr [content] minmax(0, 65ch) 0.3fr [breakout-end] 1fr [full-end];
+  column-gap: 1rem;
+
+  > * {
+    grid-column: content;
+  }
+
+  .breakout {
+    grid-column: breakout;
+  }
+  .full-bleed {
+    grid-column: full;
+  }
 }
