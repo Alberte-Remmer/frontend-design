@@ -1,75 +1,168 @@
 .bento {
-    display: grid;
-    gap: var(--spacing-base);
+  margin-inline: max(1rem, 50% - 1000px / 2); /* Responsive centrering */
+  display: grid;
+  gap: var(--spacing-base);
 
-    .title {
-        --bg: var(--color-brand-yellow);
-    }
+  /* Responsive "bento box" layout med named grid areas */
+  grid-auto-columns: 1fr; /* Kolonner fylder lige meget */
+  grid-auto-rows: min-content; /* Rækker tilpasser sig indhold */
+  grid-template-areas: /* 3x3 desktop layout */
+    "title title cup"
+    "man   list  cup"
+    "man   list  tag";
 
-    .list {
-        --bg: var(--color-brand-coffee);
-    }
+  @media (width < 650px) {
+    /* Mobil: reorganiserer til 2x3 layout */
+    grid-template-areas:
+      "title title"
+      "cup   man"
+      "list  tag";
+  }
 
-    .image-1 {
-        color: var(--color-text-accent);
+  /* Universal styling for alle grid items */
+  > * {
+    border-radius: var(--border-radius);
+    background: var(--bg);
+    padding: var(--spacing-base);
+    overflow: clip;
+    &:has(img) {
+      padding: 0;
     }
+  }
 
-    .tag {
-        --bg: var(--color-brand-olive);
-        font-size: 2rem;
-        line-height: 1.2;
+  /* Billede styling */
+  img {
+    block-size: 100%;
+    align-self: stretch;
+    object-fit: cover;
+  }
+}
+
+.title {
+  --bg: var(--color-brand-yellow);
+
+  container-type: inline-size; /* Gør .title til container for container queries */
+  grid-area: title; /* Placerer i "title" området fra grid-template-areas */
+  display: grid; /* Gør .title selv til grid container */
+
+  div {
+    display: flex; /* Flexbox layout */
+    flex-wrap: wrap; /* Elementer kan wrappe til næste linje */
+    gap: 1rem; /* Mellemrum mellem flex items */
+
+    justify-content: space-between; /* Spreder elementer til hver side */
+    @container (width < 400px) {
+      /* Når title-containeren < 400px */
+      display: contents; /* Fjerner div'en fra layout - børn flyder op */
+      > p:first-of-type {
+        /* Første paragraf */
+        order: -1; /* Flytter til allerstørst (før andre elementer) */
+        margin-bottom: 1rlh; /* Luft under */
+      }
     }
+  }
+}
+
+.list {
+  --bg: var(--color-brand-coffee); /* Sætter baggrundsfarvevariabel */
+
+  color: #fff; /* Hvid tekst */
+  grid-area: list; /* Placerer i "list" området fra grid-template-areas */
+  list-style: none; /* Fjerner bullets/nummerering */
+  font-size: 2rem; /* Stor tekst */
+  line-height: 1.5; /* Luftig linjehøjde */
+  display: grid; /* Gør til grid container */
+  place-content: center; /* Centrerer indhold både horisontalt og vertikalt */
+
+  .highlight {
+    color: var(--color-menu-highlight); /* Fremhævningsfarve */
+    &::before {
+      content: "⚡"; /* Indsætter lyn-emoji før tekst */
+      margin-right: 10px; /* Luft mellem emoji og tekst */
+    }
+  }
+}
+
+.cup {
+  color: var(--color-text-accent);
+  grid-area: cup; /* Placerer i "cup" området fra grid-template-areas */
+  display: grid; /* Gør .cup til grid container */
+  grid: "stack"; /* Laver ét navngivet område kaldet "stack" */
+  justify-items: center; /* Centrerer items horisontalt */
+  align-items: end; /* Justerer items til bunden */
+
+  > * {
+    /* Alle direkte børn */
+    grid-area: stack; /* Alle børn placeres i samme "stack" område (overlap) */
+    &:not(img) {
+      /* Alt undtagen billeder */
+      margin: var(--spacing-base); /* Giver margin for at skabe afstand fra kanter */
+    }
+  }
+  p:first-of-type {
+    /* Første paragraf */
+    align-self: start; /* Overskriver parent's align-items - placerer øverst */
+  }
+}
+
+.man {
+  grid-area: man; /* Placerer i "man" området fra grid-template-areas */
+}
+
+.tag {
+  --bg: var(--color-brand-olive);
+  font-size: 2rem;
+  line-height: 1.2;
+  grid-area: tag; /* Placerer i "tag" området fra grid-template-areas */
 }
 
 .card {
-    border-radius: var(--border-radius);
-    background: var(--bg);
-    overflow: clip;
+  border-radius: var(--border-radius);
+  background: var(--bg);
+  overflow: clip;
 
-    &:not(:has(img)) {
-        padding: var(--spacing-base);
-    }
+  &:not(:has(img)) {
+    padding: var(--spacing-base);
+  }
 }
 
 h2 {
-    font-size: 4rem;
-    line-height: 1.1;
-    color: var(--color-text-dark);
-    margin-bottom: var(--spacing-base);
+  font-size: 4rem;
+  line-height: 1.1;
+  color: var(--color-text-dark);
+  margin-bottom: var(--spacing-base);
 }
 
 .website {
-    font-size: 1.2rem;
-    margin-top: auto;
+  font-size: 1.2rem;
+  margin-top: auto;
 }
 
-
-
 @layer {
-    :root {
-        /* Brand Colors */
-        --color-brand-yellow: #FFB800;
-        --color-brand-olive: #4A5F32;
-        --color-brand-coffee: #5C3C2E;
+  :root {
+    /* Brand Colors */
+    --color-brand-yellow: #ffb800;
+    --color-brand-olive: #4a5f32;
+    --color-brand-coffee: #5c3c2e;
 
-        /* Background Colors */
-        --color-background-dark: #2C1810;
-        --color-background-primary: var(--color-brand-yellow);
-        --color-background-menu: var(--color-brand-coffee);
-        --color-background-accent: var(--color-brand-olive);
+    /* Background Colors */
+    --color-background-dark: #2c1810;
+    --color-background-primary: var(--color-brand-yellow);
+    --color-background-menu: var(--color-brand-coffee);
+    --color-background-accent: var(--color-brand-olive);
 
-        /* Text Colors */
-        --color-text-dark: var(--color-background-dark);
-        --color-text-light: #FFFFFF;
-        --color-text-accent: var(--color-brand-yellow);
+    /* Text Colors */
+    --color-text-dark: var(--color-background-dark);
+    --color-text-light: #ffffff;
+    --color-text-accent: var(--color-brand-yellow);
 
-        /* Component Colors */
-        --color-logo-icon: var(--color-text-dark);
-        --color-menu-highlight: var(--color-brand-yellow);
+    /* Component Colors */
+    --color-logo-icon: var(--color-text-dark);
+    --color-menu-highlight: var(--color-brand-yellow);
 
-        /* Layout */
-        --border-radius: 24px;
-        --spacing-base: 20px;
-        --spacing-large: 40px;
-    }
+    /* Layout */
+    --border-radius: 24px;
+    --spacing-base: 20px;
+    --spacing-large: 40px;
+  }
 }
