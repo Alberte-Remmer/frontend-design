@@ -1,6 +1,10 @@
 @import url("https://fonts.cdnfonts.com/css/gill-sans-2");
 @import url("https://fonts.cdnfonts.com/css/abril-fatface");
 
+:root {
+  --flow-space: 0.6rem;
+}
+
 article {
   font-family: "Gill Sans", sans-serif;
   max-inline-size: 400px;
@@ -9,6 +13,11 @@ article {
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   border-radius: 1rem;
   border: 1px solid #dadceb;
+
+  /* Vælg alle elementer, som står lige efter et andet element */
+  > * + * {
+    margin-block-start: var(--flow-space);
+  }
 }
 
 .picture {
@@ -48,6 +57,18 @@ article {
   gap: 1rem;
   padding: 0 2rem 1rem;
 }
+/* .card-content {
+  display: flex;
+  flex-direction: column;
+  padding: 0 2rem 1rem;
+
+  > * + * {
+    margin-block-start: var(--flow-space);
+  }
+  header {
+    margin-block-start: var(--flow-space-lg);
+  }
+} */
 
 .title {
   font-family: "gill sans", sans-serif;
