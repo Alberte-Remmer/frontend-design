@@ -16,16 +16,30 @@ const { cardContent } = Astro.props;
 <style>
   ul {
     list-style: none;
+    /* Hvis ikke vi fjerner padding, så virker det ikke. Normalt ville man lægge dette i et reset*/
+    padding: 0;
     display: flex;
-    gap: var(--card-gap);
+    /* Så man kun kan scrolle (x-aksen) i selve ul elementet og ikke på hele siden*/
     overflow-x: auto;
+    gap: var(--card-gap);
+    /* Her har jeg lavet en variabel som kan bruges istedet - Noget man gør til sidst*/
+    --scroll-padding: max(1rem, 50% - var(--content-width) / 2);
+    /* Smart centrering: beregnet side-padding på store skærme, minimum 1rem på små */
+    padding-inline: var(--scroll-padding);
+    /* Snap to cards */
+
+    scroll-padding-inline: var(--scroll-padding);
+    scroll-snap-type: x mandatory;
+
     li {
+      /* flex er short for flex-grow flex-shrink flex-basis */
+      flex: 1 0 400px;
       background: var(--card-background);
       color: var(--card-text-color);
       border-radius: var(--card-border-radius);
-      font-size: 1rem;
       padding: var(--card-padding);
-      align-self: start;
+      scroll-snap-align: start; /* Snapper til kortets start */
+      scroll-snap-stop: always; /* Tvinger stop ved hvert kort */
     }
   }
 </style>
